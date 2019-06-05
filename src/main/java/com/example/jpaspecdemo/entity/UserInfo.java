@@ -1,14 +1,20 @@
 package com.example.jpaspecdemo.entity;
 
+import com.example.jpaspecdemo.entity.dto.UserDto;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
+
 @Entity
-@Table(name = "user_info", schema = "jpa_spec_demo", catalog = "")
+@Table(name = "user_info", schema = "jpa_spec_demo")
 public class UserInfo {
     private int id;
     private String username;
     private Integer addressId;
+    private Integer roleId;
+    private LocalDateTime createTime;
 
     @Id
     @Column(name = "id")
@@ -17,6 +23,25 @@ public class UserInfo {
         return id;
     }
 
+    @Basic
+    @Column(name = "create_time")
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    @Basic
+    @Column(name = "role_id")
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
 
     public void setId(int id) {
         this.id = id;
