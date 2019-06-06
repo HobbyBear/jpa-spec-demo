@@ -1,6 +1,7 @@
 package com.example.jpaspecdemo.utils;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Slf4j
 public class JdbcUtil {
 
     @Autowired
@@ -26,6 +28,7 @@ public class JdbcUtil {
      * @return dto
      */
     public <T>T getCustomerDto(String sql, Object[] queryArgs, RowMapper<T> rowMapper) {
+        log.info(sql);
         return jdbcTemplate.queryForObject(sql, queryArgs, rowMapper);
     }
 
@@ -38,6 +41,7 @@ public class JdbcUtil {
      * @return dto list
      * */
     public <T> List<T> getCustomerDtoList(String sql, Object[] queryArgs, RowMapper<T> rowMapper) {
+        log.info(sql);
         return jdbcTemplate.query(sql, queryArgs, rowMapper);
     }
 
@@ -85,6 +89,7 @@ public class JdbcUtil {
         //结束位置
         int limit = offset + size;
         sql = sql +" limit "+ limit +" offset "+offset;
+        log.info(sql);
         List<T> content = jdbcTemplate.query(sql,queryArgs,rowMapper);
         return PageBean.<T>builder()
                 .content(content)
