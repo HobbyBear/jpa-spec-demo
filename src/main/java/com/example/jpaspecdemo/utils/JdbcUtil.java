@@ -66,8 +66,7 @@ public class JdbcUtil {
         if (totalSize == 0){
             return PageBean.<T>builder()
                     .content(new ArrayList<>())
-                    .elementTotalSize(0)
-                    .page(0)
+                    .page(1)
                     .size(0)
                     .totalPage(0)
                     .totalSize(0)
@@ -83,7 +82,6 @@ public class JdbcUtil {
         List<T> content = jdbcTemplate.query(sql,queryArgs,rowMapper);
         return PageBean.<T>builder()
                 .content(content)
-                .elementTotalSize(content.size())
                 .totalSize(totalSize)
                 .totalPage(totalPage)
                 .page(page)
