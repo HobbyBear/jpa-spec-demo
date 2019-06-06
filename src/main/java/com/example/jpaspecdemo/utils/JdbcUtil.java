@@ -2,6 +2,7 @@ package com.example.jpaspecdemo.utils;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -62,7 +63,12 @@ public class JdbcUtil {
             throw new RuntimeException("每页大小必须大于1");
         }
         //总共数量
-        int totalSize = jdbcTemplate.queryForObject(countSql,countArgs,Integer.class);
+        int totalSize = 0;
+        try {
+            totalSize = jdbcTemplate.queryForObject(countSql,countArgs,Integer.class);
+        } catch (EmptyResultDataAccessException e) {   //queryForObject 查询不到数据会抛出 EmptyResultDataAccessException 异常
+            totalSize = 0;
+        }
         if (totalSize == 0){
             return PageBean.<T>builder()
                     .content(new ArrayList<>())
